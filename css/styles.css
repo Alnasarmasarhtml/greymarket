@@ -83,8 +83,10 @@ input{font:inherit}
 
 /* ---------- inversion flash (fires ONLY on resolve) ---------- */
 .flash{position:fixed;inset:0;z-index:9500;pointer-events:none;background:var(--paper);opacity:0;mix-blend-mode:difference}
-.flash.fire{animation:flashfire .28s steps(1,end)}
-@keyframes flashfire{0%{opacity:0}5%{opacity:1}100%{opacity:0}}
+/* gentle inversion pulse on sell-resolve — NOT a full-white blast (was steps(1,end) holding opacity:1 ~0.27s) */
+.flash.fire{animation:flashfire .5s ease-out}
+@keyframes flashfire{0%{opacity:0}14%{opacity:.4}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){ .flash.fire{animation:none} }
 body.invert{filter:invert(1) hue-rotate(180deg)}
 
 /* ============================================================
@@ -506,6 +508,14 @@ section{position:relative;z-index:2;padding:clamp(72px,11vh,150px) var(--gut);ma
 
 /* offline modal sub-line */
 .modal__sub{ display:block; font-size:11px; margin:-12px 0 18px; line-height:1.4; }
+
+/* nav right cluster + persistent PLAY CTA (accent = inversion: solid paper pill) */
+.nav__actions{ display:flex; gap:10px; align-items:stretch; }
+.node--play{ background:var(--paper); }
+.node--play .node__k{ color:var(--paper-base); border-right-color:rgba(11,11,12,.22); }
+.node--play .node__v{ color:var(--paper-base); font-weight:500; letter-spacing:.14em; }
+.node--play:hover{ background:var(--paper); filter:brightness(.9); transform:translateY(-1px); }
+.node--play:hover .node__k,.node--play:hover .node__v{ color:var(--paper-base); }
 
 /* persistent 解 DECODE toggle (reuses .node invert-on-hover chrome) */
 .node--decode{ position:fixed; left:1.1rem; bottom:1.1rem; z-index:60; }
