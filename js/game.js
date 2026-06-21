@@ -47,9 +47,9 @@ const PORTS = [
 
 const UPGRADES = [
   { id:'hauler',    k:'輸', name:'HAULER',     desc:'Another truck on the route. More goods, every second.',
-    cost:s=>80*Math.pow(1.6, s.haulers-1),            cur:'cash', buy:s=>s.haulers++ },
+    cost:s=>80*Math.pow(1.7, s.haulers-1),            cur:'cash', buy:s=>s.haulers++ },
   { id:'through',   k:'流', name:'THROUGHPUT',  desc:'Heavier loads per hauler. Raises flow across the fleet.',
-    cost:s=>120*Math.pow(1.7, s.throughLv-1),          cur:'cash', buy:s=>s.throughLv++ },
+    cost:s=>120*Math.pow(1.8, s.throughLv-1),          cur:'cash', buy:s=>s.throughLv++ },
   { id:'cargo',     k:'庫', name:'CARGO HOLD',  desc:'Bigger holds. Hoard more goods before a forced sell.',
     cost:s=>90*Math.pow(1.6, s.cargoLv),               cur:'cash', buy:s=>s.cargoLv++ },
   { id:'discretion',k:'隠', name:'DISCRETION',  desc:'Move quiet. Your own sells dent the price less, so you crash your own payout less.',
