@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0B0B0C" />
+<title>GREYMARKET 墨市 — The empty page pays</title>
+<meta name="description" content="GREYMARKET — an idle smuggling terminal. The crowd drowns the price. Read the dry quadrant. The empty page pays." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Genos:ital,wght@0,500;0,700;0,800;0,900;1,800&family=Inter+Tight:wght@400;500;600&family=Martian+Mono:wght@300;400;500;700&family=Yuji+Syuku&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230B0B0C'/%3E%3Crect x='6' y='6' width='20' height='20' fill='%23F4F1EA'/%3E%3C/svg%3E" />
+</head>
+<body data-theme="ink">
+
+<!-- ===== global texture & chrome ===== -->
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div id="cursor" class="cursor" aria-hidden="true"><span class="cursor__x"></span></div>
+<div id="flash" class="flash" aria-hidden="true"></div>
+
+<!-- ===== SVG defs (filters reused everywhere) ===== -->
+<svg width="0" height="0" class="svgdefs" aria-hidden="true">
+  <defs>
+    <filter id="wetbloom" x="-40%" y="-40%" width="180%" height="180%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G">
+        <animate attributeName="scale" begin="indefinite" dur="0.5s" values="0;14;3" fill="freeze"/>
+      </feDisplacementMap>
+    </filter>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.015 0.02" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <radialGradient id="blotGrad" cx="42%" cy="40%" r="62%">
+      <stop offset="0%" stop-color="#000" stop-opacity="1"/>
+      <stop offset="55%" stop-color="#000" stop-opacity="0.78"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<!-- ===== NAV ===== -->
+<header class="nav" id="nav">
+  <a href="#hero" class="nav__mark" aria-label="GREYMARKET home">
+    <span class="mark mark--sm" data-wordmark>GREYMARKET</span>
+    <span class="chop chop--sm" lang="ja">墨市</span>
+  </a>
+  <nav class="nav__links">
+    <a href="#edge" data-nav>THE EDGE<i lang="ja">理</i></a>
+    <a href="#terminal" data-nav>TERMINAL<i lang="ja">端末</i></a>
+    <a href="#decoder" data-nav>DECODE<i lang="ja">解</i></a>
+    <a href="#how" data-nav>SYSTEM<i lang="ja">仕組</i></a>
+    <a href="#manifest" data-nav>MANIFEST<i lang="ja">記録</i></a>
+  </nav>
+  <a href="#terminal" class="node node--ca" id="caNode" data-copy="So1aNa…GREYxxxxxxxxxxxxxxxxxxxxxxxxxxxxx">
+    <span class="node__k" lang="ja">契約</span><span class="node__v">CA · COPY</span>
+  </a>
+</header>
+
+<main>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero__media" aria-hidden="true">
+    <video class="hero__video" autoplay muted loop playsinline
+           poster="assets/greymarket_hero_poster.jpg">
+      <source src="assets/greymarket_hero_inkdrop_loop_1080p.mp4" type="video/mp4" />
+    </video>
+    <div class="hero__fade"></div>
+  </div>
+
+  <div class="spine spine--left" aria-hidden="true"><span lang="ja">密輸 ・ 灰 市 ・ 端 末</span></div>
+
+  <div class="hero__inner">
+    <div class="eyebrow"><span class="tick"></span><span>IDLE SMUGGLING TERMINAL</span><span lang="ja">灰市端末</span></div>
+    <h1 class="hero__title">
+      <span class="mark mark--hero" data-wordmark>GREYMARKET</span>
+      <span class="chop chop--hero" lang="ja">墨市</span>
+    </h1>
+    <p class="hero__tag">The empty page pays.<br/><em>Read the dry quadrant.</em></p>
+    <p class="hero__decode mono dim" data-decode>
+      <span class="gx" lang="ja">訳</span> An idle game — your trucks make goods on their own. You sell them at the <b>empty</b> port; the crowded ones pay almost nothing. Find the quiet one before everyone else does.
+    </p>
+    <p class="hero__lede">Your haulers run the routes while you sleep. But the crowd drowns the price — sell into a soaked port and the ink dries to nothing. The yield is in the negative space. Find the quiet berth before the manifest does.</p>
+    <div class="hero__cta">
+      <button class="btn btn--primary" data-scroll="#terminal">
+        <span class="btn__face"><span class="btn__label">ENTER THE TERMINAL</span><span class="btn__k" lang="ja">起動</span></span>
+        <span class="btn__seal" aria-hidden="true"></span>
+      </button>
+      <a class="btn btn--ghost" data-scroll="#edge"><span class="btn__label">READ THE EDGE</span></a>
+    </div>
+    <div class="hero__manifold">
+      <div class="hero__manifold-head">
+        <span class="mono dim">LIVE FLOOR · 六港</span>
+        <span class="mono dim" id="heroClock">BATCH —</span>
+      </div>
+      <div id="heroManifold" class="manifold manifold--mini"></div>
+    </div>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true"><span class="mono">SCROLL</span><span class="hairline"></span></div>
+</section>
+
+<!-- ===== IN ONE BREATH (plain decode) ===== -->
+<section class="breath" id="breath">
+  <div class="rule" data-rule></div>
+  <div class="breath__inner">
+    <span class="kicker mono">00 — IN ONE BREATH<i lang="ja">一息</i></span>
+    <p class="breath__line"><b>Your trucks make goods every second</b> — even while you're gone.</p>
+    <p class="breath__line"><b>You sell them into one of six ports. The catch: selling crashes that port's price</b> — and everyone shares the same six. So a crowded port pays almost nothing, and an empty one pays a lot.</p>
+    <p class="breath__line"><b>You win by selling where the crowd isn't.</b> The twist: orders are <b>sealed</b> and clear on the next <b>batch</b> — a shared timer that fires every ~12s, when everyone's sealed orders settle at once. The crowd moves first, so you're betting on which port will be quiet <em>next</em>, not which is quiet now.</p>
+    <p class="breath__turn"><span class="gx" lang="ja">即ち</span> That quiet port is <em>the dry quadrant</em>. The whole game is learning to read it. <span class="mono dim">— the tagline was the instruction all along.</span></p>
+  </div>
+</section>
+
+<!-- ===== THE EDGE ===== -->
+<section class="edge" id="edge">
+  <div class="rule" data-rule></div>
+  <div class="section-head">
+    <span class="kicker mono">01 — THE EDGE<i lang="ja">理</i></span>
+    <h2 class="h2">The crowd<br/>is the price.</h2>
+  </div>
+  <div class="edge__grid">
+    <article class="edge__lede">
+      <p class="edge__plain">Everyone sells into the same six ports. <b>The more a port is used, the less it pays.</b> So the money is in the port nobody's using yet.</p>
+      <p class="edge__gloss mono dim"><span class="gx" lang="ja">訳</span> Pumping out more goods and dumping them all in one busy port earns LESS than a small, smart sale into an empty one. The money is in the empty space — not the volume.</p>
+      <p class="edge__twist">The twist: you don't sell now. You <b>commit a sealed order</b> that clears one batch later — and the crowd moves first. So the skill isn't spotting which port is quiet. It's calling which one <em>stays</em> quiet.</p>
+      <ol class="edge__steps">
+        <li><span class="num mono">一</span><div><b>Read the negative space.</b> The dry quadrant pays.<span class="mono dim">→ tall ink = crowded = dying pay; sell where the blot is palest.</span></div></li>
+        <li><span class="num mono">二</span><div><b>Bet where the crowd isn't going.</b> The ghost pre-stamp marks the dry berth about to flood.<span class="mono dim">→ skip the <span lang="ja">兆</span> INCOMING port even if it looks empty.</span></div></li>
+        <li><span class="num mono">三</span><div><b>Watch the stain pay nothing.</b> Soaked ports dry to dead black; your empty page blooms.<span class="mono dim">→ crowded = no money; your quiet pick = the payout.</span></div></li>
+      </ol>
+    </article>
+    <aside class="edge__diagram">
+      <div class="panel panel--demo">
+        <div class="panel__corners" aria-hidden="true"></div>
+        <div class="panel__head"><span class="mono">POOL DEPTH · 需給</span><span class="mono dim">EMPTIER PORT = HIGHER PAY · 乾 = 払</span></div>
+        <div id="edgeManifold" class="manifold"></div>
+        <div class="edge__caption mono">
+          <span><span class="sw sw--crowd"></span>SOAKED · crowded · pays little</span>
+          <span><span class="sw sw--dry"></span>DRY · empty · pays most</span>
+          <span><span class="sw sw--ghost"></span>INCOMING · about to crowd</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ===== HOW TO PLAY ===== -->
+<section class="play" id="play">
+  <div class="rule" data-rule></div>
+  <div class="section-head">
+    <span class="kicker mono">— HOW TO PLAY<i lang="ja">手順</i></span>
+    <h2 class="h2">Four moves.<br/>That's the game.</h2>
+  </div>
+  <ol class="play__steps">
+    <li><span class="play__n num mono" lang="ja">一</span><div class="play__b">
+      <h3>Make goods</h3>
+      <p>Do nothing. Your haulers fill the cargo hold every second — even offline. Buy more haulers to fill it faster.</p>
+      <p class="play__echo mono dim"><span class="gx" lang="ja">訳</span> the haulers run the routes while you sleep</p></div></li>
+    <li><span class="play__n num mono" lang="ja">二</span><div class="play__b">
+      <h3>Find the empty port</h3>
+      <p>In the PORT GRID, big dark blots = crowded (they pay little). Pick a port labeled <b lang="ja">乾 DRY</b> — it's the small pale one, and the one gently pulsing is paying best right now.</p>
+      <p class="play__echo mono dim"><span class="gx" lang="ja">訳</span> read the negative space — the dry quadrant pays</p></div></li>
+    <li><span class="play__n num mono" lang="ja">三</span><div class="play__b">
+      <h3>Commit a sealed sell</h3>
+      <p>Set how much to sell, hit COMMIT SELL. The order seals — you can't watch it — and pays out at the next batch (the shared ~12-second timer when all sealed orders clear at once). You're betting on where the price <em>will be</em>.</p>
+      <p class="play__echo mono dim"><span class="gx" lang="ja">訳</span> 封印 — seal it, the empty page blooms on resolve</p></div></li>
+    <li><span class="play__n num mono" lang="ja">四</span><div class="play__b">
+      <h3>Predict the next flood</h3>
+      <p>Everyone rushes the quiet port — and kills it. Buy INTEL with $GREY to see which empty port is about to crowd (<b lang="ja">兆 INCOMING</b>), and sell into one that stays quiet. That's the whole skill.</p>
+      <p class="play__echo mono dim"><span class="gx" lang="ja">訳</span> the ghost pre-stamp marks the berth about to soak</p></div></li>
+  </ol>
+  <p class="play__foot mono dim">That's it — make goods → sell into the empty port → seal it → predict the next flood. Everything else (upgrades, demand windows, standing orders) just sharpens these four. New here? Hit COMMIT SELL once; you'll see exactly what happens.</p>
+</section>
+
+<!-- ===== TERMINAL (THE GAME) ===== -->
+<section class="terminal" id="terminal">
+  <div class="rule" data-rule></div>
+  <div class="section-head section-head--row">
+    <div>
+      <span class="kicker mono">02 — THE TERMINAL<i lang="ja">端末</i></span>
+      <h2 class="h2">The grey floor.</h2>
+    </div>
+    <div class="hud" id="hud">
+      <div class="hud__cell" title="your money from sales — buys trucks, holds, speed"><span class="hud__k mono">CASH ¥</span><span class="hud__v stat" id="statCash">0</span></div>
+      <div class="hud__cell" title="scarce token from sales — spend on INTEL (prototype)"><span class="hud__k mono">$GREY</span><span class="hud__v stat" id="statGrey">0.000</span></div>
+      <div class="hud__cell" title="goods waiting to sell / your hold limit — sell before it caps"><span class="hud__k mono">GOODS<i lang="ja"> 在庫</i></span><span class="hud__v stat" id="statGoods">0</span><span class="hud__sub mono" id="statCargo">/ 0</span></div>
+      <div class="hud__cell" title="goods made per second by your fleet"><span class="hud__k mono">FLOW /s</span><span class="hud__v stat" id="statFlow">0.0</span></div>
+    </div>
+  </div>
+
+  <div class="floor">
+    <!-- LEFT: port grid + manifold -->
+    <div class="floor__main">
+      <div class="panel panel--grid">
+        <div class="panel__corners" aria-hidden="true"></div>
+        <div class="panel__head">
+          <span class="mono">PORT GRID · 六港 — pick where to sell</span>
+          <span class="mono dim" id="batchClock">NEXT BATCH —</span>
+        </div>
+        <div id="portGrid" class="portgrid"></div>
+        <div class="panel__foot">
+          <span class="mono dim">TAP A PORT TO SELL · 選択 — the pale one pays</span>
+          <span class="mono dim">DARKER BLOT = MORE CROWDED = PAYS LESS · 濃 = 密</span>
+        </div>
+      </div>
+
+      <div class="panel panel--manifold">
+        <div class="panel__corners" aria-hidden="true"></div>
+        <div class="panel__head"><span class="mono">THE MANIFOLD · 需給曲線</span><span class="mono dim">TALL BARS = CROWDED · the line is PAY-RATE — sell where it rides high</span></div>
+        <div id="termManifold" class="manifold manifold--lg"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: commit + upgrades -->
+    <aside class="floor__side">
+      <div class="panel panel--commit" id="commitPanel">
+        <div class="panel__corners" aria-hidden="true"></div>
+        <div class="panel__head"><span class="mono">SEALED ORDER · 封</span><span class="mono dim" id="commitState">PICK A PORT — sell blind, clears next batch</span></div>
+
+        <div class="commit__body" id="commitBody">
+          <div class="commit__berth">
+            <span class="commit__berth-k mono dim">SELLING INTO</span>
+            <span class="commit__berth-v" id="commitBerth">— —</span>
+            <span class="commit__berth-stat mono" id="commitStat">CROWD — · PAYS — · NEXT —</span>
+          </div>
+
+          <div class="commit__amt">
+            <div class="commit__amt-head">
+              <span class="mono dim">SELL VOLUME — bigger sells crash the price harder</span>
+              <span class="mono" id="amtVal">0</span>
+            </div>
+            <input type="range" id="amtRange" class="range" min="0" max="100" value="60" />
+            <div class="commit__amt-quick">
+              <button class="chip" data-amt="0.25">¼</button>
+              <button class="chip" data-amt="0.5">½</button>
+              <button class="chip" data-amt="1" title="dumps your whole hold — biggest price crash">MAX</button>
+            </div>
+          </div>
+
+          <div class="commit__est mono">
+            <span>EST. PAYOUT · if the crowd holds</span>
+            <span id="estYield" class="commit__est-v">¥ —</span>
+          </div>
+
+          <button class="btn btn--commit" id="commitBtn" disabled>
+            <span class="btn__face"><span class="btn__label">COMMIT SELL</span><span class="btn__k" lang="ja">封印</span></span>
+            <span class="btn__seal" aria-hidden="true"></span>
+          </button>
+
+          <label class="standing">
+            <input type="checkbox" id="standingToggle" />
+            <span class="standing__box" aria-hidden="true"></span>
+            <span class="standing__txt"><b>STANDING ORDER · autopilot</b><span class="mono dim">auto-sells the quietest port each batch, even while you sleep. No foresight — so it earns less than you do. The crowd will find it.</span></span>
+          </label>
+        </div>
+
+        <!-- SEALED overlay -->
+        <div class="sealed" id="sealed" aria-hidden="true">
+          <span class="sealed__k" lang="ja">封 印</span>
+          <span class="sealed__t mono">SEALED · CLEARS NEXT BATCH</span>
+          <span class="sealed__clock mono" id="sealedClock">0.0s</span>
+          <span class="sealed__hint mono dim">you can't watch it land — that's the point</span>
+        </div>
+      </div>
+
+      <div class="panel panel--up">
+        <div class="panel__corners" aria-hidden="true"></div>
+        <div class="panel__head"><span class="mono">THE OPERATION · 増強</span><span class="mono dim">CASH → bigger · $GREY → smarter</span></div>
+        <div id="upgrades" class="upgrades"></div>
+      </div>
+    </aside>
+  </div>
+
+  <p class="floor__note mono dim">PROTOTYPE · off-chain simulation. $GREY, ports & yields are illustrative game state — not financial anything. <span id="resetBtn" class="resetlink">RESET SAVE</span></p>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="how" id="how">
+  <div class="rule" data-rule></div>
+  <div class="section-head">
+    <span class="kicker mono">03 — THE SYSTEM<i lang="ja">仕組</i></span>
+    <h2 class="h2">Sealed. Batched.<br/>Anti-correlated.</h2>
+  </div>
+  <div class="how__grid">
+    <article class="card"><span class="card__n mono">01</span><h3>Haulers run idle</h3><p><b class="card__plain">Your trucks make goods every second — even offline.</b> Throughput scales with the fleet; cargo holds are finite, so the page forces you to sell.</p><span class="card__k" lang="ja">自動輸送</span></article>
+    <article class="card"><span class="card__n mono">02</span><h3>The shared pool</h3><p><b class="card__plain">All six ports are one market everyone shares — and your own sale lowers the price.</b> Selling is never free: it stains the berth for everyone, including future-you.</p><span class="card__k" lang="ja">共有市場</span></article>
+    <article class="card"><span class="card__n mono">03</span><h3>Sealed commit-reveal</h3><p><b class="card__plain">You sell blind: seal the order, it clears next batch.</b> One uniform auction — no front-running, no latency war. Only your read of where the crowd is heading.</p><span class="card__k" lang="ja">封印決済</span></article>
+    <article class="card"><span class="card__n mono">04</span><h3>The dry quadrant</h3><p><b class="card__plain">Win by selling where the crowd isn't — and predicting where it'll go.</b> Buy intel, learn the hidden demand windows. The moment everyone floods the quiet berth, it stops being quiet.</p><span class="card__k" lang="ja">乾象限</span></article>
+  </div>
+</section>
+
+<!-- ===== DECODER / GLOSSARY ===== -->
+<section class="decoder" id="decoder">
+  <div class="rule" data-rule></div>
+  <div class="section-head">
+    <span class="kicker mono">解 — THE DECODER<i lang="ja">対訳</i></span>
+    <h2 class="h2">The ink says /<br/>it means.</h2>
+    <p class="decoder__sub mono dim">A translator's key. Every mark on the floor, in plain words. Read once — you're inside.</p>
+  </div>
+  <dl class="lex">
+    <div class="lex__row"><dt><span lang="ja">乾</span>DRY</dt><dd>An <b>empty</b> port. Almost no one selling here, so it pays the most. Sell here.</dd></div>
+    <div class="lex__row"><dt><span lang="ja">混</span>OPEN</dt><dd>A <b>middling</b> port. Some crowd, okay pay. Fine, not great.</dd></div>
+    <div class="lex__row"><dt><span lang="ja">密</span>SOAKED</dt><dd>A <b>crowded</b> port. Everyone dumped here — pays almost nothing. Avoid.</dd></div>
+    <div class="lex__row"><dt><span lang="ja">兆</span>INCOMING</dt><dd>Empty <b>now</b>, but the crowd is about to flood it next batch. Looks good — won't be. (Shows only with INTEL.)</dd></div>
+    <div class="lex__row"><dt>INK · the blot</dt><dd>How crowded a port is, shown as ink. <b>Bigger, darker blot = more goods dumped = lower pay.</b></dd></div>
+    <div class="lex__row"><dt>CROWD % (THRU)</dt><dd>How crowded a port is, 0–100%. 0 = empty, 100 = jammed. <b>Higher crowd = lower pay.</b> (DeFi calls this congestion / price-impact.)</dd></div>
+    <div class="lex__row"><dt>↑ YIELD · pay-rate</dt><dd><b>How much each unit pays right now</b>, 0–100. ↑ high = good, ↓ low = dead. The flip side of crowding.</dd></div>
+    <div class="lex__row"><dt>THE MANIFOLD <span lang="ja">需給曲線</span></dt><dd>The instrument under the grid. <b>Tall bars = crowded ports.</b> The line that droops into a valley is the pay-rate — it sags over the crowd. The one bright tick is your pick. Sell where the line rides high.</dd></div>
+    <div class="lex__row"><dt>COMMIT SELL <span lang="ja">封印</span></dt><dd><b>Place a sealed sell order.</b> You don't get the price you see now — it locks and clears at the next batch, after the crowd moves.</dd></div>
+    <div class="lex__row"><dt>SEALED · RESOLVING</dt><dd>Your order is locked and <b>you can't watch it</b>. Everyone seals blind, then all clear together at the batch — no peeking, no speed-racing. (DeFi calls this "commit-reveal": you commit hidden, the batch reveals.)</dd></div>
+    <div class="lex__row"><dt>BATCH</dt><dd>The clock — <b>every ~12s all sealed orders clear at once.</b> The crowd moves first, then your sale clears. Faster with FENCE SPEED.</dd></div>
+    <div class="lex__row"><dt>GHOST PRE-STAMP <span lang="ja">兆</span></dt><dd>The faint ring around a port = <b>"the crowd is about to pile in here."</b> The game's forecast. Only shows with INTEL.</dd></div>
+    <div class="lex__row"><dt>INTEL <span lang="ja">諜</span></dt><dd>An upgrade bought with $GREY. <b>Reveals the forecast</b> — which empty port is about to flood, and higher levels show how hard. This is the edge.</dd></div>
+    <div class="lex__row"><dt>STANDING ORDER</dt><dd><b>Autopilot.</b> Auto-sells into the quietest port each batch, even offline. No foresight — so playing yourself beats it. The crowd will find it.</dd></div>
+    <div class="lex__row"><dt>CASH ¥</dt><dd>Your main money, from sales. Buys haulers, bigger holds, faster batches, quieter selling.</dd></div>
+    <div class="lex__row"><dt>$GREY</dt><dd>The scarce token, a trickle per sale (~1 per ¥3,000 sold). Spends only on INTEL. <b>Save ~1 $GREY (about ¥3,000 of sales) to buy your first INTEL</b> — that's what it's for. (prototype · off-chain · not money)</dd></div>
+    <div class="lex__row"><dt>YOUR STAIN <span lang="ja">汚</span> · PRICE IMPACT</dt><dd><b>Your own selling crowds the port too.</b> Sell big into one place and you crash your own price — for the next ton, and future-you. DISCRETION softens it. Selling is never free.</dd></div>
+    <div class="lex__row"><dt>DEMAND WINDOW</dt><dd>Each port's baseline pay drifts slowly on a hidden cycle. <b>Learn the rhythm</b> — the deepest, discoverable edge.</dd></div>
+    <div class="lex__row"><dt>ANTI-CORRELATED</dt><dd>Fancy word for <b>"go where the crowd isn't."</b> The best move is the opposite of what everyone's doing — and it stays that way, because the instant everyone floods the quiet port it stops being quiet.</dd></div>
+  </dl>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq" id="faq">
+  <div class="rule" data-rule></div>
+  <div class="section-head">
+    <span class="kicker mono">問 — STRAIGHT ANSWERS<i lang="ja">問答</i></span>
+    <h2 class="h2">No riddles here.</h2>
+  </div>
+  <dl class="qa">
+    <div class="qa__row"><dt>What is this?</dt><dd>An idle game about smuggling. Trucks make goods on their own; you sell them at whichever of six ports is least crowded. Selling crashes the price, so the skill is selling where the crowd isn't. <span class="mono dim">The poetry is the skin. The game underneath is simple.</span></dd></div>
+    <div class="qa__row"><dt>How do I make money?</dt><dd>Pick a <b lang="ja">乾 DRY</b> (empty) port, set a sell volume, hit COMMIT SELL. It clears at the next batch and pays CASH (¥) — empty ports pay the most. <span class="mono dim">Reinvest the cash in more trucks and bigger holds; the in-game economy snowballs from there.</span></dd></div>
+    <div class="qa__row"><dt>Why did my sale pay so little?</dt><dd>The port was crowded — or the crowd flooded it between sealing and clearing. You also dent the price yourself when you dump a lot at once. <span class="mono dim">Smaller sells into truly empty ports keep more.</span></dd></div>
+    <div class="qa__row"><dt>What's a "dry" port?</dt><dd>An empty, lightly-used one (low CROWD %). Fewer sellers means each unit pays more. <span class="mono dim">乾 = dry = the negative space that pays — where nobody's selling.</span></dd></div>
+    <div class="qa__row"><dt>What does INTEL do?</dt><dd>It shows the forecast — a ghost ring (<b lang="ja">兆 INCOMING</b>) on the empty port that's about to get crowded, so you don't sell into a trap. Higher levels show how hard, and how soon.</dd></div>
+    <div class="qa__row"><dt>How do I get INTEL?</dt><dd>INTEL costs $GREY, the trickle-token from every sale (~1 $GREY per ¥3,000 sold). Sell a few times, save up about 1 $GREY, and buy INTEL NET in THE OPERATION panel.</dd></div>
+    <div class="qa__row"><dt>Does it earn while I'm offline?</dt><dd>Goods keep stacking offline, always. Cash only if <b>STANDING ORDER</b> is on — but it sells without foresight, so active play earns more.</dd></div>
+    <div class="qa__row"><dt>Why are my orders sealed? I can't even watch.</dt><dd>By design. Everyone commits blind and the batch clears at once — no speed games, just your read of where the crowd's going.</dd></div>
+    <div class="qa__row"><dt>Is $GREY real money? Is this financial advice?</dt><dd>No and no. <span class="mono dim">Prototype · off-chain simulation. $GREY, ports and yields are illustrative game state — not financial anything.</span></dd></div>
+  </dl>
+</section>
+
+<!-- ===== MANIFEST / ROADMAP ===== -->
+<section class="manifest" id="manifest">
+  <div class="rule" data-rule></div>
+  <div class="manifest__head">
+    <span class="spine spine--inline" lang="ja">記録 ・ 航 路</span>
+    <div class="section-head">
+      <span class="kicker mono">04 — THE MANIFEST<i lang="ja">記録</i></span>
+      <h2 class="h2">Cleared for<br/>departure.</h2>
+    </div>
+  </div>
+  <ol class="ledger">
+    <li class="ledger__row" data-rowstate="cleared"><span class="ledger__ph mono">PH·00</span><div class="ledger__b"><h4>The Floor <i lang="ja">基盤</i></h4><p>Idle haulers, the six-port pool, sealed commit-reveal batches, the Manifold, the dry-quadrant reveal. Playable now.</p></div><span class="ledger__st mono">CLEARED</span></li>
+    <li class="ledger__row" data-rowstate="cleared"><span class="ledger__ph mono">PH·01</span><div class="ledger__b"><h4>Intel Network <i lang="ja">諜報</i></h4><p>Tiered forecast vision, hidden per-port demand windows, the ghost pre-stamp. Skill expression deepens.</p></div><span class="ledger__st mono">CLEARED</span></li>
+    <li class="ledger__row" data-rowstate="active"><span class="ledger__ph mono">PH·02</span><div class="ledger__b"><h4>$GREY On-Chain <i lang="ja">発行</i></h4><p>Sealed batches settle on-chain. Faucet throttled by price impact; sinks burn. Yield is a dividend on real fees — not a printer.</p></div><span class="ledger__st mono">IN TRANSIT</span></li>
+    <li class="ledger__row" data-rowstate="pending"><span class="ledger__ph mono">PH·03</span><div class="ledger__b"><h4>Cartels <i lang="ja">徒党</i></h4><p>Alliances, contested routes, the crowded-trade leaderboard. The metagame learns to hide from itself.</p></div><span class="ledger__st mono">SCHEDULED</span></li>
+  </ol>
+</section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="foot" id="foot">
+  <div class="rule" data-rule></div>
+  <div class="foot__top">
+    <div class="foot__brand">
+      <span class="mark mark--foot" data-wordmark>GREYMARKET</span>
+      <span class="chop chop--foot" lang="ja">墨市</span>
+      <p class="foot__tag mono">THE EMPTY PAGE PAYS · 空白が払う</p>
+    </div>
+    <div class="foot__nodes">
+      <a class="node" href="#terminal"><span class="node__k" lang="ja">取引</span><span class="node__v">DEXSCREENER</span></a>
+      <a class="node" href="#hero"><span class="node__k" lang="ja">交</span><span class="node__v">X / TWITTER</span></a>
+      <a class="node" href="#hero"><span class="node__k" lang="ja">群</span><span class="node__v">TELEGRAM</span></a>
+    </div>
+  </div>
+  <div class="foot__bottom mono dim">
+    <span>© 2026 GREYMARKET 墨市 — idle smuggling terminal · prototype</span>
+    <span>RENDERED IN INK</span>
+  </div>
+</footer>
+
+<!-- ===== PERSISTENT DECODER TOGGLE ===== -->
+<button class="node node--decode" id="decodeToggle" aria-label="Open the decoder" data-scroll="#decoder">
+  <span class="node__k" lang="ja">解</span><span class="node__v">DECODE</span>
+</button>
+
+<!-- ===== OFFLINE EARNINGS MODAL ===== -->
+<div class="modal" id="offlineModal" aria-hidden="true">
+  <div class="modal__card panel">
+    <div class="panel__corners" aria-hidden="true"></div>
+    <span class="modal__k" lang="ja">不在報告</span>
+    <h3 class="modal__title">WHILE YOU WERE GONE</h3>
+    <span class="modal__sub mono dim">goods stacked automatically. cash only if STANDING ORDER was on.</span>
+    <div class="modal__rows mono" id="offlineRows"></div>
+    <button class="btn btn--primary" id="offlineClaim"><span class="btn__face"><span class="btn__label">COLLECT</span><span class="btn__k" lang="ja">回収</span></span><span class="btn__seal"></span></button>
+  </div>
+</div>
+
+<!-- ===== scripts ===== -->
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
