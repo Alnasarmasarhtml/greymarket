@@ -64,32 +64,29 @@ export async function getStatus(pk) {
   catch (_) { return null; }
 }
 
-/* ---------- Berth Seal — the per-epoch activation ("account tax") ---------- */
+/* ---------- Berth Seal — per-epoch activation, PAID IN $GREY (burned) → token utility ---------- */
 export async function payActivation(game, tierId = "runner") {
   const a = GM.chain.activation;
   const tier = a.tiers.find(t => t.id === tierId) || a.tiers[0];
   if (!isLive()) { openSealAtLaunch(tier); return { ok: false, reason: "demo" }; }
   if (!game.state.wallet) { await connectWallet(game); if (!game.state.wallet) return { ok: false, reason: "no-wallet" }; }
   try {
-    const web3 = await loadWeb3();
-    const conn = new web3.Connection(GM.token.rpc, "confirmed");
-    const from = new web3.PublicKey(game.state.wallet);
-    const to = new web3.PublicKey(a.receiver || GM.token.treasury);
-    const tx = new web3.Transaction().add(web3.SystemProgram.transfer({
-      fromPubkey: from, toPubkey: to, lamports: Math.round(tier.feeSol * web3.LAMPORTS_PER_SOL),
-    }));
-    tx.feePayer = from; tx.recentBlockhash = (await conn.getLatestBlockhash()).blockhash;
-    const signed = await provider.signTransaction(tx);
-    const sig = await conn.sendRawTransaction(signed.serialize());
-    await conn.confirmTransaction(sig, "confirmed");
+    // server prices the seal in $GREY from the oracle (feeSolValue ÷ token price) and builds the BURN tx
     const resp = await fetch(apiBase() + GM.chain.api.activate, {
       method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ wallet: game.state.wallet, sig, tier: tier.id, epoch: currentEpoch() }),
+      body: JSON.stringify({ wallet: game.state.wallet, tier: tier.id, epoch: currentEpoch() }),
     });
-    if (!resp.ok) throw new Error("seal not verified");
+    if (!resp.ok) throw new Error("seal not built");
+    const { txBase64, tokenAmount } = await resp.json();
+    const web3 = await loadWeb3();
+    const tx = web3.Transaction.from(Uint8Array.from(atob(txBase64), c => c.charCodeAt(0)));
+    const signed = await provider.signTransaction(tx);
+    const conn = new web3.Connection(GM.token.rpc, "confirmed");
+    const sig = await conn.sendRawTransaction(signed.serialize());
+    await conn.confirmTransaction(sig, "confirmed");
     game.state.license = { active: true, tier: tier.id, sig, epoch: currentEpoch(), ts: Date.now() };
     game.save?.(); refreshWalletUI(game.state);
-    return { ok: true, sig, epoch: currentEpoch() };
+    return { ok: true, sig, tokenAmount, epoch: currentEpoch() };
   } catch (e) { console.warn("[greymarket] seal failed", e); openSealAtLaunch(tier); return { ok: false, reason: String(e) }; }
 }
 
@@ -174,8 +171,9 @@ function openSimple(title, bodyHtml, btn = "KEEP PLAYING") {
 }
 export function openSealAtLaunch(tier) {
   const a = GM.chain.activation;
+  const fee = tier?.feeSolValue ?? a.feeSolValue;
   openSimple(`${a.licenseName.toUpperCase()} 封印 — STAMPED AT LAUNCH`,
-    `At launch, a per-season <b>${a.licenseName}</b> (${tier?.feeSol ?? a.feeSol} SOL to the house) seals your berth and unlocks a <b>real, capped weekly drip</b> of $GREY — and keeps the crowd from draining the pool, because every runner pays the house first. <b>Right now nothing here is real money</b> — it's a free demo.`);
+    `At launch, a per-season <b>${a.licenseName}</b> — sealed in <b>$GREY worth ≈${fee} SOL</b> and <b>burned</b> — unlocks a <b>real, capped weekly drip</b> of $GREY. Sealing in $GREY is the point: it gives the token real utility (buy &amp; burn to earn) and keeps the crowd from draining the pool, since every runner must buy in first. <b>Right now nothing here is real money</b> — it's a free demo.`);
 }
 export function openClaimAtLaunch() {
   openSimple("THE PORT ISN'T OPEN YET — THAT'S YOUR EDGE.",

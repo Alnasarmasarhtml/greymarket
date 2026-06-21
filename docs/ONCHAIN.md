@@ -14,10 +14,12 @@ Gameplay does **not** mint claimable token (client is untrusted). Claimable $GRE
 (30,000 $GREY split across all sealed runners, halving each season → sybil-proof), a lifetime cap (≈90),
 diminishing returns, min account age, cooldown, and a per-day outflow cap. **Botting EV ≤ 0 at any price.**
 
-## The "account tax" — Berth Seal 封印
-Recurring **per-epoch** (1 week) SOL fee to the treasury: base `0.04 SOL`; tiers `runner / fixer / syndicate`
-raise the cap proportionally. Post-liquidity, enable a burned `feeToken` so the cost scales with price.
-70% of seal + cosmetic SOL → buyback-and-burn.
+## The "account tax" — Berth Seal 封印 — PAID IN $GREY, BURNED
+Recurring **per-epoch** (1 week). Cost denominated in **SOL-value** (`feeSolValue: 0.08`) but **paid in
+$GREY** (`payIn:"token"`) and **burned** — the backend prices it from the oracle each epoch. Maximum token
+utility: every runner must **buy $GREY to seal a berth** (buy pressure) and the seal is **burned**
+(deflation). Tiers `runner / fixer / syndicate` raise the cap proportionally. Earnings stay value-pegged
+to ≤ 0.5 × the fee value, so botting is net-negative while the token gets bought + burned every season.
 
 ## Token value in-game
 $GREY is spent on the edge: **INTEL** (the forecast — de-facto required to compete; raise max 4→6) plus

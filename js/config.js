@@ -32,11 +32,13 @@ export const GM = {
   chain: {
     activation: {
       enabled: true, licenseName: "Berth Seal", recurring: true,
-      feeSol: 0.04, feeToken: 0, feeTokenBurn: true,
+      payIn: "token",              // sealed in $GREY, NOT SOL → buy pressure + a hard sink (max token utility)
+      feeSolValue: 0.08,           // cost/epoch in SOL-VALUE; actual $GREY = feeSolValue ÷ tokenPriceInSol (server reads oracle)
+      feeTokenBurn: true,          // sealed $GREY is BURNED → deflation
       tiers: [
-        { id: "runner",    feeSol: 0.04, epochCapMult: 1.0, claimCooldownH: 24 },
-        { id: "fixer",     feeSol: 0.20, epochCapMult: 1.8, claimCooldownH: 12 },
-        { id: "syndicate", feeSol: 0.80, epochCapMult: 3.0, claimCooldownH: 6  },
+        { id: "runner",    feeSolValue: 0.08, epochCapMult: 1.0, claimCooldownH: 24 },
+        { id: "fixer",     feeSolValue: 0.40, epochCapMult: 1.8, claimCooldownH: 12 },
+        { id: "syndicate", feeSolValue: 1.60, epochCapMult: 3.0, claimCooldownH: 6  },
       ],
       refundable: false, receiver: "",
     },
