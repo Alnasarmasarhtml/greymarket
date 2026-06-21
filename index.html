@@ -55,6 +55,7 @@
     <a href="#manifest" data-nav>MANIFEST<i lang="ja">記録</i></a>
   </nav>
   <div class="nav__actions">
+    <span id="chainBadge" class="chain-badge" title="On-chain status — off-chain demo until launch">DEMO</span>
     <a class="node node--play" data-scroll="#terminal" href="#terminal" aria-label="Play the game">
       <span class="node__k" lang="ja">起動</span><span class="node__v">PLAY ▶</span>
     </a>
@@ -277,10 +278,27 @@
         <div class="panel__head"><span class="mono">THE OPERATION · 増強</span><span class="mono dim">CASH → bigger · $GREY → smarter</span></div>
         <div id="upgrades" class="upgrades"></div>
       </div>
+
+      <div class="panel panel--vault">
+        <div class="panel__corners" aria-hidden="true"></div>
+        <div class="panel__head"><span class="mono">VAULT · 金庫</span><span class="mono dim" id="bankStatus">free demo · score, not a token</span></div>
+        <div class="vault" id="bankPanel">
+          <div class="vault__bal"><b class="stat" id="bankBalance">0</b><span class="mono dim">$GREY · demo score (resets at launch)</span></div>
+          <div class="vault__rows mono">
+            <div class="vault__row"><span class="dim">WALLET</span><b id="bankWallet">not connected</b></div>
+            <div class="vault__row"><span class="dim">BERTH SEAL</span><b id="licenseBadge">— opens at launch</b></div>
+            <div class="vault__row"><span class="dim">ON-CHAIN</span><b id="onchainBal">—</b></div>
+          </div>
+          <button class="btn btn--ghost vault__btn" id="walletBtn"><span class="btn__face"><span class="btn__label">CONNECT WALLET</span></span></button>
+          <button class="btn btn--ghost vault__btn" id="sealBtn"><span class="btn__face"><span class="btn__label">BERTH SEAL 封印</span></span></button>
+          <button class="btn btn--commit vault__btn" id="claimBtn" disabled><span class="btn__face"><span class="btn__label">CLAIM AT LAUNCH</span></span><span class="btn__seal" aria-hidden="true"></span></button>
+          <p class="vault__fine mono dim">Free demo. $GREY here is a practice score — not a token, resets at launch. At launch a per-season Berth Seal unlocks a real, capped weekly $GREY drip and keeps the crowd from draining the pool.</p>
+        </div>
+      </div>
     </aside>
   </div>
 
-  <p class="floor__note mono dim">PROTOTYPE · off-chain simulation. $GREY, ports & yields are illustrative game state — not financial anything. <span id="resetBtn" class="resetlink">RESET SAVE</span></p>
+  <p class="floor__note mono dim">FREE DEMO · off-chain. $GREY here is a demo score, not a token — no claims, no value until launch. On-chain at launch via the per-season Berth Seal (a capped weekly drip, not a printer). <span id="resetBtn" class="resetlink">RESET SAVE</span></p>
 </section>
 
 <!-- ===== HOW IT WORKS ===== -->
@@ -407,10 +425,24 @@
   </div>
 </div>
 
+<!-- ===== modal root (chain layer) ===== -->
+<div id="modalRoot"></div>
+
 <!-- ===== scripts ===== -->
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
 <script src="js/game.js"></script>
+<script type="module">
+  import { GM, isLive, canClaim, isActivated, apiBase, currentEpoch } from "./js/config.js";
+  import * as Chain from "./js/chain.js";
+  window.GM = Object.assign(GM, { isLive, canClaim, isActivated, apiBase, currentEpoch });
+  window.GMChain = Chain;
+  const g = () => window.__S_GAME__;
+  const on = (id, fn) => document.getElementById(id)?.addEventListener("click", () => { const x = g(); if (x) fn(x); });
+  on("walletBtn", (x) => Chain.connectWallet(x));
+  on("sealBtn",   (x) => Chain.payActivation(x));
+  on("claimBtn",  (x) => Chain.claim(x));
+</script>
 </body>
 </html>

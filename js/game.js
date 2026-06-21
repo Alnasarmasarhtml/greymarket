@@ -70,6 +70,11 @@ const DEFAULT = () => ({
   standing:false,
   selected:null,
   lifetimeYield:0,
+  // ---- on-chain / demo (grey above is a DEMO SCORE pre-launch: not a token, resets at launch) ----
+  wallet:null,
+  license:{ active:false, tier:null, sig:null, epoch:-1, ts:0 },
+  lastClaimTs:0,
+  lifetimeClaimed:0,
 });
 let S = DEFAULT();
 
@@ -456,7 +461,8 @@ function save(){
   S.lastSeen=now();
   const slim={ cash:S.cash,grey:S.grey,goods:S.goods,haulers:S.haulers,throughLv:S.throughLv,
     cargoLv:S.cargoLv,discLv:S.discLv,batchLv:S.batchLv,intelLv:S.intelLv,lastSeen:S.lastSeen,
-    standing:S.standing,lifetimeYield:S.lifetimeYield };
+    standing:S.standing,lifetimeYield:S.lifetimeYield,
+    wallet:S.wallet,license:S.license,lastClaimTs:S.lastClaimTs,lifetimeClaimed:S.lifetimeClaimed };
   try{ localStorage.setItem(CFG.SAVE_KEY, JSON.stringify(slim)); }catch(e){}
 }
 function load(){
@@ -630,6 +636,10 @@ function init(){
 
   initMotion();
   coachInit();
+
+  // expose state to the chain layer (chain.js mutates wallet/license, calls save) + paint wallet/badge UI
+  window.__S_GAME__ = { state:S, save };
+  try{ window.GMChain?.refreshWalletUI?.(S); }catch(e){}
 
   // offline report
   const o = had ? offlineEarnings() : null;
